@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1cb5e0, #000851);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #1cb5e0, #000851);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .login-container a {
+      display: inline-block;
+      margin-top: 15px;
+      color: #1cb5e0;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .login-container a:hover {
+      color: #000851;
+    }
+
+    @media (max-width: 400px) {
+      .login-container {
+        margin: 0 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome Back</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Enter Username" required>
+      <input type="password" id="password" placeholder="Enter Password" required>
+      <button type="submit">Login</button>
+      <a href="UserRegister.html">Don't have an account? Register</a>
+    </form>
+  </div>
+
+  <script>
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (!user) {
+        alert("Invalid credentials!");
+      } else if (user.status !== 'active') {
+        alert("Account not active. Contact admin.");
+      } else {
+        localStorage.setItem('loggedInUser', username);
+        window.location.href = "secondhome.html";
+      }
+    });
+  </script>
+</body>
+</html>
