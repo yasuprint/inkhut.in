@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>inkhut - Product Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111;
+      padding: 10px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .navbar .logo {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .navbar .icons i {
+      margin-left: 0px;
+      cursor: pointer;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+    .left-panel {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px;
+    }
+    .main-img-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    .main-img-container img {
+      width: 100%;
+      max-width: 100%;
+      transition: transform 0.3s ease;
+    }
+    .main-img-container:hover img {
+      transform: scale(1.2);
+    }
+    .thumbnails {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    .thumbnails img {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      cursor: pointer;
+      object-fit: cover;
+      border: 2px solid transparent;
+    }
+    .thumbnails img.active {
+      border-color: #d32f2f;
+    }
+    .right-panel {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px 20px;
+    }
+    .product-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .price {
+      font-size: 22px;
+      color: #d32f2f;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    .coupon {
+      background: #e0f7fa;
+      padding: 10px;
+      border: 1px dashed #00acc1;
+      margin: 10px 0;
+    }
+    .options {
+      margin: 15px 0;
+    }
+    .options label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .options select, .sizes button {
+      padding: 8px;
+      margin: 5px 5px 5px 0;
+      cursor: pointer;
+    }
+    .sizes button {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
+    }
+    .sizes button.active {
+      border-color: #8e24aa;
+      background: #f3e5f5;
+    }
+    .add-cart {
+      background: #d32f2f;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .add-cart:hover {
+      background: #b71c1c;
+    }
+
+    /* Cart Modal */
+    .cart-modal {
+      position: fixed;
+      top: 10%;
+      right: 10px;
+      background: white;
+      color: black;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      padding: 20px;
+      width: 320px;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+      z-index: 999;
+      border-radius: 8px;
+    }
+    .cart-modal h3 {
+      margin-top: 0;
+    }
+    .cart-modal .close-btn {
+      float: right;
+      cursor: pointer;
+      font-size: 18px;
+      color: #d32f2f;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .cart-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #8e24aa;
+      color: white;
+      border: none;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .checkout-btn:hover {
+      background: #6a1b9a;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .main-img-container:hover img {
+        transform: none;
+      }
+      .cart-modal {
+        width: 90%;
+        right: 5%;
+        top: 5%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">inkhut</div>
+    <div class="icons">
+      <i onclick="alert('Search clicked')">🔍</i>
+      <i onclick="alert('Profile clicked')">👤</i>
+      <i onclick="alert('Wishlist clicked')">🤍</i>
+      <i onclick="showCart()">🛒 (<span id="cartCount">0</span>)</i>
+    </div>
+  </div>
+
+  <!-- Product Container -->
+  <div class="container">
+    <!-- Left Image Section -->
+    <div class="left-panel">
+      <div class="main-img-container">
+        <img id="mainImage" src="https://www.dudeme.in/cdn/shop/products/Declare-variables-MELANGE.jpg?v=1661775148&width=600" alt="T-shirt" />
+      </div>
+      <div class="thumbnails">
+        <img class="active" src="https://dudeme.in/cdn/shop/products/1_74c28578-7f89-4a4e-99c1-bb85b48cc6c1.jpg?v=1657523513" onclick="changeImage(this)" />
+        <img src="https://dudeme.in/cdn/shop/products/3_338844a5-6a7e-4fbd-8975-144c2a32b86e.jpg?v=1657523513" onclick="changeImage(this)" />
+        <img src="https://dudeme.in/cdn/shop/products/5_0a83cb2d-446a-498a-8195-92e2a9a68c08.jpg?v=1657523513" onclick="changeImage(this)" />
+      </div>
+    </div>
+
+    <!-- Right Product Info -->
+    <div class="right-panel">
+      <div class="product-title">Declare Variables not War Half Sleeve T-Shirt</div>
+      <div>
+        <span class="old-price">₹1199</span>
+        <span class="price">₹599</span>
+      </div>
+
+      <div class="coupon">
+        <p>Buy 2 for ₹999 only (Use code: DUDEME999)</p>
+
+          Product id        PROD7890
+      </div>
+
+      <div class="options">
+        <label for="colorSelect">Choose Color:</label>
+        <select id="colorSelect">
+          <option value="White">White</option>
+          <option value="Black">Black</option>
+          <option value="Red">Red</option>
+          <option value="Blue">Blue</option>
+        </select>
+      </div>
+
+      <div class="options sizes">
+        <label>Choose Size:</label>
+        <button type="button" class="size-btn active" onclick="selectSize(this)">M</button>
+        <button type="button" class="size-btn" onclick="selectSize(this)">L</button>
+        <button type="button" class="size-btn" onclick="selectSize(this)">XL</button>
+        <button type="button" class="size-btn" onclick="selectSize(this)">XXL</button>
+      </div>
+
+      <button class="add-cart" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <span class="close-btn" onclick="hideCart()">×</span>
+    <h3>Your Cart</h3>
+    <div id="cartItemsContainer"></div>
+    <button class="checkout-btn" onclick="showOrderForm()">Proceed to Order</button>
+  </div>
+
+<script>
+  let cart = [];
+  let selectedSize = 'M';
+
+  // Change main image on thumbnail click
+  function changeImage(img) {
+    document.getElementById('mainImage').src = img.src;
+    document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
+    img.classList.add('active');
+  }
+
+  // Select size button
+  function selectSize(button) {
+    document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    selectedSize = button.textContent;
+  }
+
+  // Add product to cart
+  function addToCart() {
+    const product = {
+      id: 1,
+      title: 'Declare Variables not War Half Sleeve T-Shirt',
+      price: 599,
+      color: document.getElementById('colorSelect').value,
+      size: selectedSize,
+      image: document.getElementById('mainImage').src,
+      quantity: 1
+    };
+
+    // Check if already in cart with same options
+    const existingIndex = cart.findIndex(item => item.id === product.id && item.color === product.color && item.size === product.size);
+    if (existingIndex > -1) {
+      cart[existingIndex].quantity += 1;
+    } else {
+      cart.push(product);
+    }
+    updateCartCount();
+    alert('Product added to cart!');
+  }
+
+  // Update cart count in navbar
+  function updateCartCount() {
+    let totalQty = 0;
+    cart.forEach(item => totalQty += item.quantity);
+    document.getElementById('cartCount').textContent = totalQty;
+  }
+
+  // Show cart modal
+  function showCart() {
+    if(cart.length === 0){
+      alert('Your cart is empty.');
+      return;
+    }
+    const container = document.getElementById('cartItemsContainer');
+    container.innerHTML = '';
+    cart.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" />
+        <div class="cart-item-details">
+          <div><strong>${item.title}</strong></div>
+          <div>Color: ${item.color}</div>
+          <div>Size: ${item.size}</div>
+          <div>Qty: ${item.quantity}</div>
+          <div>Price: ₹${item.price * item.quantity}</div>
+        </div>
+        <button onclick="removeFromCart(${idx})" style="background:#d32f2f; border:none; color:#fff; border-radius:4px; padding:4px 8px; cursor:pointer;">Remove</button>
+      `;
+      container.appendChild(div);
+    });
+    document.getElementById('cartModal').style.display = 'block';
+  }
+
+  // Hide cart modal
+  function hideCart() {
+    document.getElementById('cartModal').style.display = 'none';
+  }
+
+  // Remove item from cart
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartCount();
+    showCart();
+  }
+
+  // Show order form - Now redirects to Google Form
+  function showOrderForm() {
+    if(cart.length === 0){
+      alert('Cart is empty!');
+      return;
+    }
+    // Redirecting to Google Form for order
+    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeBAD7lwDxY9TZKojDzol-txxKRZeSveO_5OGgpkB0QUtS1uw/viewform?usp=dialog';
+  }
+</script>
+
+</body>
+</html>
