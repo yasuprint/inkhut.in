@@ -3,659 +3,1169 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>inkhut</title>
- <style>
+  <title>lnkkhut</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
   * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fff;
-  margin: 0;
-}
-
-/* --------- Offer Bar --------- */
-.top-offer-bar {
-  background: #000;
-  color: white;
-  font-size: 14px;
-  padding: 10px;
-  text-align: center;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
-/* --------- Navbar --------- */
-.navbar {
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.nav-left, .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.nav-left a, .nav-right a {
-  text-decoration: none;
-  color: black;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 22px;
-  color: #e53935;
-  flex-shrink: 0;
-}
-
-.logo span {
-  color: #8e24aa;
-}
-
-.menu-toggle {
-  display: none;
-  font-size: 24px;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-/* --------- Search Bar --------- */
-.search-bar {
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  font-size: 14px;
-  outline: none;
-  transition: 0.3s;
-}
-
-.search-bar:focus {
-  border-color: #8e24aa;
-  box-shadow: 0 0 4px rgba(142, 36, 170, 0.5);
-}
-
-/* --------- Mobile Menu --------- */
-.mobile-menu-wrapper {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
-  background: #fff;
-  border-top: 1px solid #ddd;
-}
-
-.mobile-menu-wrapper.active {
-  max-height: 500px;
-}
-
-.mobile-menu {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 20px;
-}
-
-.mobile-menu a {
-  margin: 10px 0;
-  text-decoration: none;
-  color: #000;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .nav-left, .nav-right {
-    display: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  .menu-toggle {
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f2f2f2;
+    padding: 0;
+  }
+
+  .top-bar {
+    background-color: #111;
+    color: white;
+    font-size: 14px;
+    padding: 5px 15px;
+    text-align: center;
+  }
+
+  .logo span:nth-child(1) {
+    color: #ff5733;
+    font-weight: bold;
+    font-size: 26px;
+  }
+
+  .logo span:nth-child(2) {
+    color: #a855f7;
+    font-weight: bold;
+    font-size: 26px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 30px;
+    margin: 15px;
+  }
+
+  .search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px 10px;
+    width: 160px;
+    font-size: 14px;
+  }
+
+  .search-box i {
+    color: #555;
+    cursor: pointer;
+  }
+
+  .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 15px;
+  }
+
+  .nav-icons a i {
+    font-size: 20px;
+    color: #333;
+    transition: 0.3s ease;
+  }
+
+  .nav-icons a:hover i {
+    color: #ff5733;
+  }
+
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background: linear-gradient(90deg, #34b3f1, #5ee2ff);
+  }
+
+  .banner-text {
+    flex: 1;
+    min-width: 250px;
+    color: #222;
+    padding: 10px;
+  }
+
+  .banner-text h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .banner-text p {
+    font-size: 16px;
+    margin-bottom: 25px;
+    color: #333;
+  }
+
+  .btn {
+    background: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #000;
+  }
+
+  .banner-image {
+    max-width: 280px;
+    position: relative;
+    margin: 10px;
+  }
+
+  .banner-image img {
+    width: 100%;
     display: block;
   }
 
-  .logo {
-    margin: 0 auto;
-  }
-}
-
-/* --------- Section Header --------- */
-.section-header {
-  text-align: center;
-  padding: 60px 20px 20px;
-}
-
-.section-header h1 {
-  font-size: 48px;
-  font-weight: 700;
-  color: #212121;
-}
-
-.section-header p {
-  font-size: 16px;
-  color: #555;
-  margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-  .section-header {
-    padding: 40px 15px 15px;
-  }
-
-  .section-header h1 {
-    font-size: 28px;
-  }
-
-  .section-header p {
+  .discount-circle {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: #000;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
   }
-}
 
-/* --------- Product Grid --------- */
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+  }
+
+  .card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+  }
+
+  .info {
+    padding: 15px;
+  }
+
+  .info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .price {
+    color: red;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .original-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-left: 10px;
+    font-size: 13px;
+  }
+
+  .rating {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #333;
+  }
+
+  .color-dots {
+    margin-top: 10px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 5px;
+    border: 2px solid #000;
+  }
+
+  .black { background: black; }
+  .purple { background: purple; }
+  .red { background: red; }
+
+  .whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 30px;
+    text-align: center;
+    line-height: 55px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+
+  @media (max-width: 768px) {
+    .banner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .banner-text h1 {
+      font-size: 28px;
+    }
+
+    .banner-text p {
+      font-size: 15px;
+    }
+
+    .search-box input {
+      width: 100px;
+    }
+
+    .nav-icons {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+  /* Product Grid Layout (Updated for mobile) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* slightly smaller cards */
   gap: 16px;
   padding: 16px;
 }
 
-.product-card {
-  flex: 1 1 calc(50% - 16px);
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.product-card img {
-  width: 100%;
-  max-height: 220px;
-  object-fit: contain;
-  margin-bottom: 12px;
-}
-
-.product-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 6px 0;
-}
-
-.rating {
-  color: #f39c12;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
-}
-
-.price {
-  font-size: 0.95rem;
-}
-
-.sale {
-  color: red;
-  font-weight: bold;
-}
-
-.original {
-  text-decoration: line-through;
-  color: #888;
-  margin-left: 8px;
-}
-
-@media (min-width: 768px) {
-  .product-card {
-    flex: 1 1 calc(25% - 16px);
-  }
-}
-
-/* --------- Horizontal Slider --------- */
-.slider-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.slider {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  gap: 20px;
-  padding: 10px;
-}
-
-.slider::-webkit-scrollbar {
-  display: none;
-}
-
-.card {
-  min-width: 220px;
-  flex: 0 0 auto;
-  background: #fceef1;
-  border-radius: 20px;
-  text-align: center;
-  padding: 10px;
-}
-
+/* Card Image Size Reduced */
 .card img {
   width: 100%;
-  border-radius: 20px;
+  height: auto;
+  object-fit: contain;
+  max-height: 240px; /* controlled image height */
 }
 
-.card-title {
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  width: 35px;
-  height: 35px;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.arrow.left {
-  left: 0;
-}
-
-.arrow.right {
-  right: 0;
-}
-
-@media(max-width: 600px) {
-  .card {
-    min-width: 160px;
+/* Responsive Fix for Mobile: 2-column grid */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
+    gap: 12px;
+    padding: 10px;
   }
 
-  .arrow {
-    display: none;
+  .card img {
+    max-height: 180px; /* even smaller on mobile */
+  }
+
+  .info h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+
+  .original-price {
+    font-size: 12px;
+  }
+
+  .rating {
+    font-size: 12px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
   }
 }
+/* benarr secnd*/
+{     margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      text-align: center;
+    }
 
-/* --------- Footer --------- */
-.footer {
-  background-color: #1c1c1c;
-  color: white;
-  padding: 40px 20px 10px;
+    .main-heading {
+      font-size: 120px;
+      font-weight: 800;
+      background: linear-gradient(to bottom, #fcd34d, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 80px 0 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-heading {
+        font-size: 60px;
+        margin-top: 50px;
+      }
+    }
+
+    .about-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .about-section h2 {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    .about-section p {
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+    }
+    * {
+      box-sizing: border-box;
+    }
+
+    
+    .collection-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .collection-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .collection-item:hover {
+      transform: scale(1.02);
+    }
+
+    .collection-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .collection-label {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .item-1 {
+      grid-row: 1 / span 2;
+    }
+
+    @media (max-width: 768px) {
+      .collection-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 20px;
+      }
+
+      .item-1 {
+        grid-row: auto;
+      }
+
+      .collection-label {
+        font-size: 20px;
+      }
+    }
+    {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+
+    .themes-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .theme-card {
+      width: 120px;
+      text-align: center;
+    }
+
+    .theme-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 100%);
+      padding: 5px;
+    }
+
+    .theme-label {
+      margin-top: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+     * {
+      box-sizing: border-box;
+    }
+
+    
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .category-card {
+      background-color: #f8f8f8;
+      text-align: center;
+      padding: 20px;
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .category-card img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .shop-button {
+      background-color: orange;
+      color: white;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .shop-button::after {
+      content: ' ➤';
+    }
+
+    @media (max-width: 600px) {
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .category-card img {
+        max-height: 100px;
+      }
+    }
+     * {
+      box-sizing: border-box;
+    }
+
+    
+
+    .blog-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+      align-items: flex-start;
+    }
+
+    .blog-intro {
+      flex: 1 1 300px;
+      max-width: 400px;
+    }
+
+    .blog-intro h2 {
+      color: #6a1b9a;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .blog-intro strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .blog-intro p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .blog-intro a {
+      color: #6a1b9a;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    .blog-cards {
+      display: flex;
+      flex: 2 1 600px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .blog-card {
+      flex: 1 1 280px;
+      background-color: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .blog-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .blog-card-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .blog-card p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .blog-card a {
+      align-self: flex-end;
+      color: #6a1b9a;
+      font-weight: bold;
+      text-decoration: underline;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .blog-section {
+        flex-direction: column;
+      }
+
+      .blog-cards {
+        flex-direction: row;
+      }
+
+      .blog-card {
+        flex: 1 1 100%;
+      }
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .feature-item {
+      flex: 1 1 220px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      min-width: 200px;
+    }
+
+    .feature-item svg {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      color: #6d28d9;
+    }
+
+    .feature-text h4 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .feature-text p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .features {
+        flex-direction: column;
+      }
+    }
+    .footer {
+  background-color: #111;
+  color: #eee;
+  padding: 40px 0 20px;
+  font-family: 'Segoe UI', sans-serif;
 }
-
 .footer-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   max-width: 1200px;
   margin: auto;
 }
-
-.footer-section {
-  flex: 1 1 200px;
-  margin: 15px;
+.footer-column {
+  flex: 1;
+  min-width: 220px;
+  margin: 20px;
 }
-
-.footer-section h2, .footer-section h3 {
-  margin-bottom: 15px;
-  color: #fcd535;
+.footer-column h3, .footer-column h4 {
+  color: #fff;
+  margin-bottom: 10px;
 }
-
-.footer-section ul {
+.footer-column ul {
   list-style: none;
   padding: 0;
 }
-
-.footer-section ul li {
-  margin: 8px 0;
+.footer-column ul li {
+  margin-bottom: 8px;
 }
-
-.footer-section ul li a {
+.footer-column ul li a {
   color: #ccc;
   text-decoration: none;
   transition: color 0.3s;
 }
-
-.footer-section ul li a:hover {
-  color: #fcd535;
+.footer-column ul li a:hover {
+  color: #fff;
 }
-
-.social-icons a {
+.social-icons a img {
+  width: 24px;
   margin-right: 10px;
-  display: inline-block;
+  transition: transform 0.3s;
 }
-
-.social-icons img {
-  width: 28px;
-  height: 28px;
-  filter: grayscale(100%);
-  transition: filter 0.3s;
+.social-icons a img:hover {
+  transform: scale(1.2);
 }
-
-.social-icons img:hover {
-  filter: grayscale(0%);
-}
-
 .footer-bottom {
   text-align: center;
-  color: #aaa;
-  padding: 20px 0 10px;
-  font-size: 14px;
+  padding-top: 20px;
   border-top: 1px solid #444;
-  margin-top: 20px;
+  color: #999;
+  font-size: 14px;
 }
+</style>
 
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .footer-section {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .social-icons {
-    justify-content: center;
-  }
-}
-
- </style>
 </head>
 <body>
 
-  <!-- Offer Strip -->
-  <div class="top-offer-bar">
-    Get 5% OFF on your First Purchase! Use code – VISTA05 &nbsp; • &nbsp; Get 10% OFF on PREPAID Orders! No coupon code required
+  <!-- Top Bar -->
+  <div class="top-bar">
+    Get 5% OFF on your First Purchase! Use code – <strong>VISTA05</strong> &nbsp; | &nbsp;
+    Get 10% OFF on PREPAID Orders! No coupon code required
   </div>
 
   <!-- Navbar -->
-  <div class="navbar">
-    <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
+    <a class="navbar-brand logo d-flex align-items-center" href="#">
+      <span>V</span><span>tee</span>
+    </a>
 
-    <div class="nav-left">
-      <a href="#">Home</a>
-      <a href="#">All Collections</a>
-      <a href="#">Men's Collection</a>
-      <a href="#">Women's Collection</a>
-      <a href="#">TRACK ORDER</a>
-      <a href="#">About Us</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item mx-2"><a class="nav-link fw-bold" href="#">Home</a></li>
+        <li class="nav-item mx-2"><a class="nav-link fw-bold" href="#">All Collections</a></li>
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Men's Collection</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">T-Shirts</a></li>
+            <li><a class="dropdown-item" href="#">Hoodies</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown mx-2">
+          <a class="nav-link dropdown-toggle fw-bold" href="#" role="button" data-bs-toggle="dropdown">Women's Collection</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Crop Tops</a></li>
+            <li><a class="dropdown-item" href="#">Oversized</a></li>
+          </ul>
+        </li>
+        <li class="nav-item mx-2"><a class="nav-link fw-bold" href="#">TRACK ORDER</a></li>
+        <li class="nav-item mx-2"><a class="nav-link fw-bold" href="#">About Us</a></li>
+      </ul>
+
+      <!-- Search + Icons -->
+      <div class="d-flex align-items-center nav-icons">
+        <div class="search-box me-3">
+          <input type="text" placeholder="Search">
+          <i class="fas fa-search"></i>
+        </div>
+        <a href="login.html" title="Login/Register"><i class="fas fa-user"></i></a>
+        <a href="cart.html" title="Cart"><i class="fas fa-shopping-bag"></i></a>
+      </div>
     </div>
+  </nav>
 
-    <div class="logo">ink<span>ut</span></div>
-
-    <div class="nav-right">
-      <input type="text" class="search-bar" placeholder="Search..."/>
-      <a href="#">👤</a>
-      <a href="#">🛒</a>
+  <!-- Banner Section -->
+  <section class="banner">
+    <div class="banner-text">
+      <h1>New <br> Arrivals <br> Collection</h1>
+      <p>Our best seller products are on sale, grab them before they are gone!</p>
+      <button class="btn">Buy Now</button>
+    </div>
+    <div class="banner-image">
+      <img src="https://vistatee.com/cdn/shop/files/8_Front_0a5bbbce-770a-47ee-a5b9-4f473da42206.png?v=1745530082&width=500" alt="T-shirt" />
+      <div class="discount-circle">50%<br>OFF</div>
+    </div>
+  </section>
+<center>
+  <h2>FEATURED THEMES</h2></center>
+ 
+  <div class="themes-container">
+    <div class="theme-card">
+       <a href="progarming.html"><img src="https://www.dudeme.in/cdn/shop/products/AWS-BLACK.jpg?v=1661752330&width=600" alt="Anime"></a>
+      <div class="theme-label">Progarming T-Shirt</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-superhero-300x300.jpg?m=1706184531" alt="Superhero">
+      <div class="theme-label">SUPERHERO</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-glow-in-dark-300x300.jpg?m=1706184531" alt="Glow in Dark">
+      <div class="theme-label">GLOW IN DARK</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-cartoon-300x300.jpg?m=1706184531" alt="Cartoon">
+      <div class="theme-label">CARTOON</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-slogan-300x300.jpg?m=1706184531" alt="Slogan">
+      <div class="theme-label">SLOGAN</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-funny-300x300.jpg?m=1706184531" alt="Funny">
+      <div class="theme-label">FUNNY</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-geek-300x300.jpg?m=1706184531" alt="Geek">
+      <div class="theme-label">GEEK</div>
+    </div>
+    <div class="theme-card">
+      <img src="https://www.redwolf.in/image/cache/catalog/featured_categories/featured-theme-funky-300x300.jpg?m=1706184531" alt="Funky">
+      <div class="theme-label">FUNKY</div>
+    </div>
+  </div>
+<div class="grid">
+  <div class="card">
+    <span class="badge">Save Rs. 850.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/2_Front_fc0a8b2c-09dc-441a-9227-41b991228c09.png?v=1745530082&width=600" alt="Software Engineer T-Shirt" />
+    <div class="info">
+      <h3>Men's Software Engineer T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 749.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">4.8 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+      </div>
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu-wrapper" id="mobileMenuWrapper">
-    <div class="mobile-menu">
-      <a href="#">Home</a>
-      <a href="#">All Collections</a>
-      <a href="#">Men's Collection</a>
-      <a href="#">Women's Collection</a>
-      <a href="#">TRACK ORDER</a>
-      <a href="#">About Us</a>
-      <input type="text" class="search-bar" placeholder="Search..."/>
-      <a href="#">Account 👤</a>
-      <a href="#">Cart 🛒</a>
-    </div>
-  </div>
- <div class="section-header">
-    <h1>Men's Crew Neck T-Shirts</h1>
-    <p>Men's Crew Neck T-Shirts</p>
-  </div>
-  <div class="product-grid">
-  <div class="product-card">
-    <img src="https://vistatee.com/cdn/shop/files/8_Front_0a5bbbce-770a-47ee-a5b9-4f473da42206.png?v=1745530082&width=500" alt="Software Engineer T-Shirt">
-    <h3 class="product-title">Men's Software Engineer T-Shirt</h3>
-    <div class="rating">⭐ 4.8</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 800.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/26_Front_32d0b2dc-59ca-413d-b138-12880865289f.png?v=1744822315&width=500" alt="Coffee T-Shirt" />
+    <div class="info">
+      <h3>Men's Coffee refuel T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 799.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">4.7 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+        <span class="dot purple"></span>
+      </div>
     </div>
   </div>
 
-  <div class="product-card">
-    <img src="https://vistatee.com/cdn/shop/files/3_Front_7c116640-27e3-42da-817e-304aa962bc0e.png?v=1746737274&width=500" alt="Alt Ctrl Del T-Shirt">
-    <h3 class="product-title">Men's Alt Ctrl Dlt T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 699.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 900.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/8_Front_44aeb9c0-39d4-48ce-bfd1-685b7f6f15cd.png?v=1745871832&width=500" alt="Queen Crown T-Shirt" />
+    <div class="info">
+      <h3>Women's Queen Crown T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 699.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">5.0 ⭐</div>
+      <div class="color-dots">
+        <span class="dot red"></span>
+      </div>
     </div>
   </div>
 
-  <div class="product-card">
-    <img src="https://vistatee.com/cdn/shop/files/26_Front_32d0b2dc-59ca-413d-b138-12880865289f.png?v=1744822315&width=500" alt="Coffee Refuel T-Shirt">
-    <h3 class="product-title">Men's Coffee Refuel T-Shirt</h3>
-    <div class="rating">⭐ 4.7</div>
-    <div class="price">
-      <span class="sale">Rs. 799.00</span>
-      <span class="original">Rs. 1,599.00</span>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="https://vistatee.com/cdn/shop/files/38_Front_c621473c-f477-4139-a810-bb4b285bca4d.png?v=1746905687&width=500" alt="Soldier T-Shirt">
-    <h3 class="product-title">Men's Soldier T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 900.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/8_Front_045af49d-da04-405b-964e-be97689b5cfe.png?v=1745872026&width=500" alt="Checkmate T-Shirt" />
+    <div class="info">
+      <h3>Men's Chess Checkmate T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 699.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">5.0 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+      </div>
     </div>
   </div>
 </div>
 
-
-<div class="product-grid">
-  <div class="product-card">
-     <a href="D:\my use gd web\inkhut 2 save\buynewtshiert2.html"><img src="buynewtshiert2.html" alt="Software Engineer T-Shirt"></a>
-    <h3 class="product-title">Declare Variables not War Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 4.8</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+<!--new second img crad-->
+<div class="grid">
+  <div class="card">
+    <span class="badge">Save Rs. 850.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/2_Front_fc0a8b2c-09dc-441a-9227-41b991228c09.png?v=1745530082&width=600" alt="Software Engineer T-Shirt" />
+    <div class="info">
+      <h3>Men's Software Engineer T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 749.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">4.8 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+      </div>
     </div>
   </div>
 
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/1st-Rule-NAVY.jpg?v=1661942569&width=400" alt="Alt Ctrl Del T-Shirt">
-    <h3 class="product-title">If It Works Don't Touch Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 800.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/26_Front_32d0b2dc-59ca-413d-b138-12880865289f.png?v=1744822315&width=500" alt="Coffee T-Shirt" />
+    <div class="info">
+      <h3>Men's Coffee refuel T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 799.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">4.7 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+        <span class="dot purple"></span>
+      </div>
     </div>
   </div>
 
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/Programmer-life-NAVY.jpg?v=1661840058&width=400" alt="Coffee Refuel T-Shirt">
-    <h3 class="product-title">No Hugs & Kisses Only Bugs & Fixes Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 4.7</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 900.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/8_Front_44aeb9c0-39d4-48ce-bfd1-685b7f6f15cd.png?v=1745871832&width=500" alt="Queen Crown T-Shirt" />
+    <div class="info">
+      <h3>Women's Queen Crown T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 699.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">5.0 ⭐</div>
+      <div class="color-dots">
+        <span class="dot red"></span>
+      </div>
     </div>
   </div>
 
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/While-Alive-eat-sleep-BLACK.jpg?v=1661945011&width=400" alt="Soldier T-Shirt">
-    <h3 class="product-title">While Alive Eat Sleep Code Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="card">
+    <span class="badge">Save Rs. 900.00</span>
+    <img src="https://vistatee.com/cdn/shop/files/8_Front_045af49d-da04-405b-964e-be97689b5cfe.png?v=1745872026&width=500" alt="Checkmate T-Shirt" />
+    <div class="info">
+      <h3>Men's Chess Checkmate T-Shirt</h3>
+      <div>
+        <span class="price">Rs. 699.00</span>
+        <span class="original-price">Rs. 1,599.00</span>
+      </div>
+      <div class="rating">5.0 ⭐</div>
+      <div class="color-dots">
+        <span class="dot black"></span>
+      </div>
     </div>
   </div>
 </div>
+<center>
+<h1 class="main-heading">inkhut</h1></center>
 
+  <section class="about-section">
+    <h2>About inkhut</h2>
+    <p>
+      At inkhut, we believe fashion is more than what you wear. It’s how you feel, how you express yourself.
+      We’re an online platform dedicated to creating T-shirts that blend personality, comfort, and statement-making style.
+    </p>
+  </section>
 
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px; background: #fff;">
-  <!-- CORPORATE CARD -->
-  <div style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(to right, #e3f2fd, #fce4ec); border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-    <div>
-      <h2 style="margin: 0; font-size: 24px;">CORPORATE</h2>
-      <p>Anything & Anything for your Teams / Office</p>
-      <button style="background: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
-        + Shop for your Team
-      </button>
-    </div>
-    <img src="https://www.dudeme.in/cdn/shop/files/Group_12171_1.png?v=1711631094&width=800" alt="Corporate Shirts" style="width: 130px; max-height: 150px;">
-  </div>
+  <section class="features">
 
-  <!-- CUSTOMIZE CARD -->
-  <div style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(to right, #fff8e1, #f3e5f5); border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-    <div>
-      <h2 style="margin: 0; font-size: 24px;">CUSTOMIZE</h2>
-      <p>Design your own t-shirts hoodies & more with Dudeme!</p>
-      <button style="background: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
-        + Customize Now
-      </button>
-    </div>
-    <img src="https://www.dudeme.in/cdn/shop/files/Group_12173_2.png?v=1711645768&width=800" alt="Customize T-Shirt" style="width: 130px; max-height: 150px;">
-  </div>
-</div>
-  <h3 class="section-title">Curate your closet. Pick your Favorite Designs!</h3>
-
-  <div class="slider-container">
-    <button class="arrow left" onclick="scrollSlider(-1)">&#8592;</button>
-    <div class="slider" id="slider">
-      <div class="card">
-        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12736_1.png?v=1711611614&width=400" alt="Sarcasm">
-        <div class="card-title">Sarcasm</div>
-      </div>
-      <div class="card" style="background: #e8f5e9;">
-        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12737.png?v=1711611662&width=400" alt="Motivational">
-        <div class="card-title">Gym / Motivational</div>
-      </div>
-      <div class="card" style="background: #fff3e0;">
-        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12742.png?v=1711611877&width=400" alt="Couple">
-        <div class="card-title">Couple</div>
-      </div>
-      <div class="card" style="background: #fdecea;">
-        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12739.png?v=1711611910&width=400" alt="Pets">
-        <div class="card-title">Pets</div>
+    <!-- Fast Turnaround -->
+    <div class="feature-item">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div class="feature-text">
+        <h4>Fast Turnaround</h4>
+        <p>Same-day order delivery for small orders.</p>
       </div>
     </div>
-    <button class="arrow right" onclick="scrollSlider(1)">&#8594;</button>
-  </div>
 
+    <!-- Easy Ordering -->
+    <div class="feature-item">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h4l3 8 4-16 3 8h4"/>
+      </svg>
+      <div class="feature-text">
+        <h4>Easy Ordering & Reordering</h4>
+        <p>Design, order, pick up or get delivery. Reorder in a click - ideal for businesses!</p>
+      </div>
+    </div>
 
-  <div class="product-grid">
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/Declare-variables-NAVY.jpg?v=1661775148&width=400" alt="Software Engineer T-Shirt">
-    <h3 class="product-title">Declare Variables not War Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 4.8</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+    <!-- Stores Nationwide -->
+    <div class="feature-item">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M9 22V12h6v10M5 22h14a2 2 0 002-2V9H3v11a2 2 0 002 2z"/>
+      </svg>
+      <div class="feature-text">
+        <h4>27 Stores Nationwide</h4>
+        <p>Quality printing, always within reach!</p>
+      </div>
+    </div>
+
+    <!-- Wide Product Range -->
+    <div class="feature-item">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 20l9-5-9-5-9 5 9 5z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 12l9-5-9-5-9 5 9 5z"/>
+      </svg>
+      <div class="feature-text">
+        <h4>Wide Product Range</h4>
+        <p>From tees to trophies – we print it all.</p>
+      </div>
+    </div>
+
+  </section>
+<div class="collection-grid">
+    <div class="collection-item item-1">
+      <img src="https://vistatee.com/cdn/shop/files/Creamy_Black_Clean_Men_s_Fashion_Landscape_Banner_752_x_500_mm.png?v=1743890876&width=1000" alt="All Collections" />
+      <div class="collection-label">ALL COLLECTIONS</div>
+    </div>
+    <div class="collection-item">
+      <img src="https://vistatee.com/cdn/shop/files/t-shirts-for-men-charcoal-clothing.jpg?v=1743891013&width=500" alt="Men's Collection" />
+      <div class="collection-label">Men's Collection</div>
+    </div>
+    <div class="collection-item">
+      <img src="https://vistatee.com/cdn/shop/files/01_951ce3c0-3b16-49b3-b9ee-1dd89276dddb.webp?v=1743891092&width=500" alt="Women's Collection" />
+      <div class="collection-label">Women's Collection</div>
+    </div>
+    <div class="collection-item">
+      <img src="https://vistatee.com/cdn/shop/files/womenswhitetshirts-2048px-7739.webp?v=1743891169&width=1000" alt="Latest Collection" />
+      <div class="collection-label">Latest Collection</div>
     </div>
   </div>
+ <h2>Popular Categories</h2>
 
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/1st-Rule-NAVY.jpg?v=1661942569&width=400" alt="Alt Ctrl Del T-Shirt">
-    <h3 class="product-title">If It Works Don't Touch Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+  <div class="categories-grid">
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/Apparel_1745480318.jpg?quality=70&format=webp&w=640" alt="Apparel">
+      <div class="category-title">Apparel</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/Awards_1745480318.jpg?quality=70&format=webp&w=640" alt="Awards & Certificates">
+      <div class="category-title">Awards & Certificates</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/Business-statioenry_1745480318.jpg?quality=70&format=webp&w=640" alt="Business Stationery">
+      <div class="category-title">Business Stationery</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Signs/Corporate_1747082532.jpg?quality=70&format=webp&w=640" alt="Corporate Gifts">
+      <div class="category-title">Corporate Gifts</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/Drink_1745480318.jpg?quality=70&format=webp&w=640" alt="Drinkware">
+      <div class="category-title">Drinkware</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/cloudinary/Images/packaing_1747113906.jpg?quality=70&format=webp&w=640" alt="Packaging Solutions">
+      <div class="category-title">Packaging Solutions</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/Photo_1745480318.jpg?quality=70&format=webp&w=640" alt="Photo Gifts">
+      <div class="category-title">Photo Gifts</div>
+      <button class="shop-button">Shop Now</button>
+    </div>
+    <div class="category-card">
+      <img src="https://printo-s3.dietpixels.net/cloudinary/Images/Signs-and-marketing-_1747082208.jpg?quality=70&format=webp&w=640" alt="Signs & Marketing">
+      <div class="category-title">Signs & Marketing</div>
+      <button class="shop-button">Shop Now</button>
     </div>
   </div>
-
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/Programmer-life-NAVY.jpg?v=1661840058&width=400" alt="Coffee Refuel T-Shirt">
-    <h3 class="product-title">No Hugs & Kisses Only Bugs & Fixes Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 4.7</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+ <section class="blog-section">
+    <!-- Left Intro Text -->
+    <div class="blog-intro">
+      <h2>From the blog.</h2>
+      <strong>Join us in exploring the world of print through our blog.</strong>
+      <p>
+        From choosing the ideal paper to creating remarkable prints, our articles are your compass to navigate the world of print. Whether you're creating cherished memories or business materials, we're here to guide you!
+        <a href="#">Read More</a>
+      </p>
     </div>
-  </div>
 
-  <div class="product-card">
-    <img src="https://www.dudeme.in/cdn/shop/products/While-Alive-eat-sleep-BLACK.jpg?v=1661945011&width=400" alt="Soldier T-Shirt">
-    <h3 class="product-title">While Alive Eat Sleep Code Half Sleeve Unisex T-Shirt</h3>
-    <div class="rating">⭐ 5.0</div>
-    <div class="price">
-      <span class="sale">Rs. 749.00</span>
-      <span class="original">Rs. 1,599.00</span>
+    <!-- Right Blog Cards -->
+    <div class="blog-cards">
+      <div class="blog-card">
+        <img src="https://i0.wp.com/printo.in/blog/wp-content/uploads/2025/03/Untitled-design-3-1.png?fit=856%2C492&ssl=1" alt="Blog Post 1">
+        <div class="blog-card-content">
+          <p><strong>From eco-friendly labels to AR-powered prints</strong> – discover the top 5 custom printing trends redefining 2025.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+
+      <div class="blog-card">
+        <img src="https://printo-s3.dietpixels.net/site/2025/Marketing%20page/2_1745297114.jpg?quality=70&format=webp&w=640" alt="Blog Post 2">
+        <div class="blog-card-content">
+          <p><strong>Summer’s here</strong>, and so are the coolest ways to print your brand into every moment. Curious? Dive in.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-
-  <script>
-    function scrollSlider(direction) {
-      const slider = document.getElementById('slider');
-      const scrollAmount = 250;
-      slider.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  
-    function toggleMobileMenu() {
-      document.getElementById('mobileMenuWrapper').classList.toggle('active');
-    }
-  </script>
-
-
+  </section>
+<!-- Footer Start -->
 <footer class="footer">
   <div class="footer-container">
-    <div class="footer-section about">
-      <h2>GD Clothing</h2>
-      <p>Your style, your vibe. Shop from trendy, classy, and comfy clothing.</p>
+    <div class="footer-column">
+      <h3>Godawari Clothing</h3>
+      <p>Stylish & Affordable Fashion</p>
     </div>
-    <div class="footer-section">
-      <h3>Categories</h3>
+
+    <div class="footer-column">
+      <h4>Quick Links</h4>
       <ul>
-        <li><a href="#">Men</a></li>
-        <li><a href="#">Women</a></li>
-        <li><a href="#">Couples</a></li>
-        <li><a href="#">Pets</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </div>
-    <div class="footer-section">
-      <h3>Support</h3>
+
+    <div class="footer-column">
+      <h4>Customer Service</h4>
       <ul>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">Shipping</a></li>
         <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
         <li><a href="#">FAQs</a></li>
+        <li><a href="#">Terms</a></li>
       </ul>
     </div>
-    <div class="footer-section social">
-      <h3>Follow Us</h3>
+
+    <div class="footer-column">
+      <h4>Follow Us</h4>
       <div class="social-icons">
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="fb" /></a>
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="ig" /></a>
-        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="tw" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" /></a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    &copy; 2025 GD Clothing | Made with ❤️ by Godawari Web Technologies
+    <p>&copy; 2025 Godawari Clothing. All Rights Reserved.</p>
   </div>
 </footer>
+<!-- Footer End -->
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
