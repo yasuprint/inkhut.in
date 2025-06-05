@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inkhut - Clothing Store</title>
+
+  <!-- Font-Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',sans-serif}
+
+    /* ---------- Navbar ---------- */
+    .navbar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px 20px;background:#fff;border-bottom:1px solid #eee
+    }
+    .logo{font-size:24px;font-weight:bold;color:#ff2d55}
+    .nav-icons{font-size:22px;cursor:pointer}
+
+    /* ---------- Side Drawer ---------- */
+    .side-menu{
+      position:fixed;top:0;left:-300px;width:280px;height:100%;
+      background:#fff;box-shadow:2px 0 6px rgba(0,0,0,.15);transition:.3s;
+      z-index:1000;overflow-y:auto;padding:20px
+    }
+    .side-menu.active{left:0}
+
+    .side-menu h3{
+      font-size:17px;margin:20px 0 10px;
+      display:flex;align-items:center;gap:10px
+    }
+    .tabs{display:flex;gap:10px;margin-bottom:15px}
+    .tabs div{padding:6px 12px;background:#eee;border-radius:5px;font-weight:bold;cursor:pointer;font-size:14px}
+    .tabs .active{background:#ff2d55;color:#fff}
+    .label-tag{
+      display:inline-block;font-size:11px;padding:2px 6px;border-radius:30px;
+      margin-left:6px;background:#ffd54f;color:#000;font-weight:600
+    }
+
+    /* Anime grid (पहले से) */
+    .anime-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .anime-item{text-align:center;font-size:12px}
+    .anime-item img{width:45px;height:45px;object-fit:contain}
+
+    /* Category-list (नए सेक्शन) */
+    .cat-list{list-style:none;margin-top:15px}
+    .cat-list li{
+      display:flex;align-items:center;gap:12px;padding:10px 0;
+      border-bottom:1px solid #f1f1f1;font-size:15px;cursor:pointer
+    }
+    .cat-list i{font-size:18px;width:22px;text-align:center}
+    .cat-list .tag-hot{background:#ffb74d}
+    .cat-list .tag-new{background:#ea4335;color:#fff}
+    .cat-list .tag-pop{background:#ff9800;color:#fff}
+    .cat-list .tag{font-size:11px;padding:2px 6px;border-radius:30px;font-weight:600}
+
+    /* ---------- Banner ---------- */
+    .banner img{width:100%;height:auto;margin:20px 0;border-radius:10px}
+
+    /* ---------- Product Grid ---------- */
+    .products{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      gap:20px;padding:0 20px 60px
+    }
+    .prod-card{
+      border:1px solid #eee;border-radius:10px;overflow:hidden;text-align:center;
+      transition:.25s
+    }
+    .prod-card img{width:100%;height:180px;object-fit:cover}
+    .prod-card h4{padding:10px 8px;font-size:15px;font-weight:600}
+    .prod-card p{color:#ff2d55;font-weight:600;margin-bottom:10px}
+    .prod-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-3px)}
+
+    /* ---------- WhatsApp Btn ---------- */
+    .whatsapp-btn{
+      position:fixed;bottom:20px;right:20px;background:#25D366;
+      color:#fff;border-radius:50%;padding:13px;font-size:22px;z-index:1100
+    }
+
+    /* overlay */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;z-index:900
+    }
+    .overlay.active{display:block}
+
+    /* Scrollbar subtle */
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-thumb{background:#ccc;border-radius:10px}
+    /* Category Circle Section */
+.category-circles {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 10px;
+  gap: 10px;
+}
+
+.category-item {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  width: 110px;
+}
+
+.category-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--bg, #eee);
+  z-index: -1;
+}
+
+.category-item img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.category-item p {
+  margin-top: 8px;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- ======= Navbar ======= -->
+<header class="navbar">
+  <div class="logo">Inkhut</div>
+  <div class="nav-icons"><i class="fas fa-bars" onclick="openMenu()"></i></div>
+</header>
+
+<!-- ======= Side Drawer ======= -->
+<aside class="side-menu" id="sideMenu">
+  <h3><i class="fas fa-user"></i>Login / Register</h3>
+
+  <div class="tabs">
+    <div class="active">Men</div><div>Women</div><div>Kids</div>
+  </div>
+
+  <p style="margin:8px 0 15px;"><i class="fas fa-code"></i> Geek
+     <span class="label-tag">Top&nbsp;Seller</span></p>
+
+  <h3>Shop by Anime</h3>
+  <div class="anime-grid">
+    <!-- same anime items -->
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/147/147144.png"><p>All</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/807/807292.png"><p>Naruto</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/197/197386.png"><p>1Piece</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/147/147144.png"><p>Demon</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/424/424066.png"><p>Titan</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"><p>Jujutsu</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111604.png"><p>Tokyo</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/528/528101.png"><p>Dragon</p></div>
+    <div class="anime-item"><img src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png"><p>Pokemon</p></div>
+  </div>
+
+  <!-- -------- Extra Categories -------- -->
+  <ul class="cat-list">
+    <li><i class="fas fa-flag-checkered"></i> Motorsport
+        <span class="tag tag-hot">Hot</span></li>
+    <li><i class="fas fa-futbol"></i> Football
+        <span class="tag tag-new">New</span></li>
+    <li><i class="fas fa-skull"></i> StreetWear
+        <span class="tag tag-pop">Popular</span></li>
+    <li><i class="far fa-heart"></i> Couple</li>
+    <li><i class="fas fa-tint"></i> Solids</li>
+    <li><i class="fas fa-shirt"></i> Combos</li>
+    <li><i class="fas fa-fire"></i> Clearance</li>
+    <li><i class="fas fa-handshake"></i> Corporate Orders</li>
+    <li><i class="fas fa-gift"></i> Gift Cards</li>
+  </ul>
+
+  <h3 style="margin-top:25px;color:#888">Get in Touch</h3>
+  <p style="font-size:14px;color:#333;margin-bottom:40px;">care@inkhut.in</p>
+</aside>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- ======= Banner ======= -->
+<section class="banner">
+  <img src="https://www.dudeme.in/cdn/shop/files/Half_Sleeves_-_WEB_1.png?v=1712041479" alt="Banner">
+</section>
+
+<section class="category-circles">
+  <div class="category-item" style="--bg:#FFEACC">
+    <img src="https://www.dudeme.in/cdn/shop/files/Geek_Half.png?v=1718265237&width=400     " alt="Geek">
+    <p>Geek</p>
+  </div>
+  <div class="category-item" style="--bg:#FFF8B5">
+    <img src="https://www.dudeme.in/cdn/shop/files/Motorsport_-_Half.png?v=1718265236&width=400" alt="Motorsport">
+    <p>Motorsport</p>
+  </div>
+  <div class="category-item" style="--bg:#E7E5FD">
+    <img src="https://www.dudeme.in/cdn/shop/files/Anime_Half.png?v=1718265237&width=400" alt="Anime">
+    <p>Anime</p>
+  </div>
+</section>
+<!-- ======= WhatsApp Floating Button ======= -->
+<a href="https://wa.me/6264536204" class="whatsapp-btn" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>inkhut</title>
+ <style>
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #fff;
+  margin: 0;
+}
+
+/* --------- Offer Bar --------- */
+.top-offer-bar {
+  background: #000;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+/* --------- Navbar --------- */
+.navbar {
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-left a, .nav-right a {
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 22px;
+  color: #e53935;
+  flex-shrink: 0;
+}
+
+.logo span {
+  color: #8e24aa;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* --------- Search Bar --------- */
+.search-bar {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #8e24aa;
+  box-shadow: 0 0 4px rgba(142, 36, 170, 0.5);
+}
+
+/* --------- Mobile Menu --------- */
+.mobile-menu-wrapper {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  background: #fff;
+  border-top: 1px solid #ddd;
+}
+
+.mobile-menu-wrapper.active {
+  max-height: 500px;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.mobile-menu a {
+  margin: 10px 0;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .nav-left, .nav-right {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .logo {
+    margin: 0 auto;
+  }
+}
+
+/* --------- Section Header --------- */
+.section-header {
+  text-align: center;
+  padding: 60px 20px 20px;
+}
+
+.section-header h1 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #212121;
+}
+
+.section-header p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    padding: 40px 15px 15px;
+  }
+
+  .section-header h1 {
+    font-size: 28px;
+  }
+
+  .section-header p {
+    font-size: 14px;
+  }
+}
+
+/* --------- Product Grid --------- */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+}
+
+.product-card {
+  flex: 1 1 calc(50% - 16px);
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+.rating {
+  color: #f39c12;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-size: 0.95rem;
+}
+
+.sale {
+  color: red;
+  font-weight: bold;
+}
+
+.original {
+  text-decoration: line-through;
+  color: #888;
+  margin-left: 8px;
+}
+
+@media (min-width: 768px) {
+  .product-card {
+    flex: 1 1 calc(25% - 16px);
+  }
+}
+
+/* --------- Horizontal Slider --------- */
+.slider-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 10px;
+}
+
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  min-width: 220px;
+  flex: 0 0 auto;
+  background: #fceef1;
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.card-title {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  width: 35px;
+  height: 35px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrow.left {
+  left: 0;
+}
+
+.arrow.right {
+  right: 0;
+}
+
+@media(max-width: 600px) {
+  .card {
+    min-width: 160px;
+  }
+
+  .arrow {
+    display: none;
+  }
+}
+
+/* --------- Footer --------- */
+.footer {
+  background-color: #1c1c1c;
+  color: white;
+  padding: 40px 20px 10px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 15px;
+}
+
+.footer-section h2, .footer-section h3 {
+  margin-bottom: 15px;
+  color: #fcd535;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 8px 0;
+}
+
+.footer-section ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #fcd535;
+}
+
+.social-icons a {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.social-icons img {
+  width: 28px;
+  height: 28px;
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+}
+
+.social-icons img:hover {
+  filter: grayscale(0%);
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #aaa;
+  padding: 20px 0 10px;
+  font-size: 14px;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+ </style>
+</head>
+<body>
+
+ <div class="section-header">
+    <h1>Men's Crew Neck T-Shirts</h1>
+    <p>Men's Crew Neck T-Shirts</p>
+  </div>
+  <div class="product-grid">
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Navy_af2b9b72-aded-42c1-b6eb-ca4480e06915.jpg?v=1648016158&width=400" alt="Software Engineer T-Shirt">
+    <h3 class="product-title">I Need a HUGe Amount Of Money Unisex</h3>
+    <div class="rating">⭐ 4.8</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Code-Blooded-NAVY.jpg?v=1661767199&width=400" alt="Alt Ctrl Del T-Shirt">
+    <h3 class="product-title">Code Blooded Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 699.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/It-time-less-than-5-BLACK.jpg?v=1661942931&width=400" alt="Coffee Refuel T-Shirt">
+    <h3 class="product-title">If Time Less Than 5 Coffee Else Bear Half S</h3>
+    <div class="rating">⭐ 4.7</div>
+    <div class="price">
+      <span class="sale">Rs. 799.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Boss-lady-MAUVE.jpg?v=1662197795&width=400" alt="Soldier T-Shirt">
+    <h3 class="product-title">Boss Lady Boyfriend Fit Half Sleeve T-Shirt</h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="product-grid">
+  <div class="product-card">
+     <a href="D:\my use gd web\inkhut 2 save\buynewtshiert2.html"><img src="https://www.dudeme.in/cdn/shop/products/Declare-variables-NAVY.jpg?v=1661775148&width=400" alt="Software Engineer T-Shirt"></a>
+    <h3 class="product-title">Declare Variables not War Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 4.8</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+     <a href="IfItWorkspage.html"><img src="https://www.dudeme.in/cdn/shop/products/1st-Rule-NAVY.jpg?v=1661942569&width=400" alt="Alt Ctrl Del T-Shirt"></a>
+    <h3 class="product-title">If It Works Don't Touch Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Programmer-life-NAVY.jpg?v=1661840058&width=400" alt="Coffee Refuel T-Shirt">
+    <h3 class="product-title">No Hugs & Kisses Only Bugs & Fixes Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 4.7</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/While-Alive-eat-sleep-BLACK.jpg?v=1661945011&width=400" alt="Soldier T-Shirt">
+    <h3 class="product-title">While Alive Eat Sleep Code Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+</div>
+
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px; background: #fff;">
+  <!-- CORPORATE CARD -->
+  <div style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(to right, #e3f2fd, #fce4ec); border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+    <div>
+      <h2 style="margin: 0; font-size: 24px;">CORPORATE</h2>
+      <p>Anything & Anything for your Teams / Office</p>
+      <button style="background: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        + Shop for your Team
+      </button>
+    </div>
+    <img src="https://www.dudeme.in/cdn/shop/files/Group_12171_1.png?v=1711631094&width=800" alt="Corporate Shirts" style="width: 130px; max-height: 150px;">
+  </div>
+
+  <!-- CUSTOMIZE CARD -->
+  <div style="flex: 1 1 300px; max-width: 500px; background: linear-gradient(to right, #fff8e1, #f3e5f5); border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+    <div>
+      <h2 style="margin: 0; font-size: 24px;">CUSTOMIZE</h2>
+      <p>Design your own t-shirts hoodies & more with Dudeme!</p>
+      <button style="background: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        + Customize Now
+      </button>
+    </div>
+    <img src="https://www.dudeme.in/cdn/shop/files/Group_12173_2.png?v=1711645768&width=800" alt="Customize T-Shirt" style="width: 130px; max-height: 150px;">
+  </div>
+</div>
+  <h3 class="section-title">Curate your closet. Pick your Favorite Designs!</h3>
+
+  <div class="slider-container">
+    <button class="arrow left" onclick="scrollSlider(-1)">&#8592;</button>
+    <div class="slider" id="slider">
+      <div class="card">
+        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12736_1.png?v=1711611614&width=400" alt="Sarcasm">
+        <div class="card-title">Sarcasm</div>
+      </div>
+      <div class="card" style="background: #e8f5e9;">
+        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12737.png?v=1711611662&width=400" alt="Motivational">
+        <div class="card-title">Gym / Motivational</div>
+      </div>
+      <div class="card" style="background: #fff3e0;">
+        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12742.png?v=1711611877&width=400" alt="Couple">
+        <div class="card-title">Couple</div>
+      </div>
+      <div class="card" style="background: #fdecea;">
+        <img src="https://www.dudeme.in/cdn/shop/files/Frame_12739.png?v=1711611910&width=400" alt="Pets">
+        <div class="card-title">Pets</div>
+      </div>
+    </div>
+    <button class="arrow right" onclick="scrollSlider(1)">&#8594;</button>
+  </div>
+
+
+  <div class="product-grid">
+  <div class="product-card">
+      <a href="tp1.html"><img src="https://www.dudeme.in/cdn/shop/products/No-deploy-fridays-developer-BOTTLE-G.jpg?v=1661947359&width=400" alt="Software Engineer T-Shirt"></a>
+    <h3 class="product-title">No Deploy Fridays Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 4.8</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Css-to-my-html-MAROON.jpg?v=1661947204&width=600" alt="Alt Ctrl Del T-Shirt">
+    <h3 class="product-title">You Are The Css To My Html Half Sleeve Unisex T-Shirt/h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Code-Coffee-Repeat-NAVY.jpg?v=1661767435&width=400" alt="Coffee Refuel T-Shirt">
+    <h3 class="product-title"> Code Coffee Repeat Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 4.7</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.dudeme.in/cdn/shop/products/Git-Hub-the-place-where-NAVY.jpg?v=1661932089&width=400" alt="Soldier T-Shirt">
+    <h3 class="product-title">GitHub The Place Where i Fork Half Sleeve Unisex T-Shirt</h3>
+    <div class="rating">⭐ 5.0</div>
+    <div class="price">
+      <span class="sale">Rs. 749.00</span>
+      <span class="original">Rs. 1,599.00</span>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    function scrollSlider(direction) {
+      const slider = document.getElementById('slider');
+      const scrollAmount = 250;
+      slider.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenuWrapper').classList.toggle('active');
+    }
+  </script>
+
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section about">
+      <h2>GD Clothing</h2>
+      <p>Your style, your vibe. Shop from trendy, classy, and comfy clothing.</p>
+    </div>
+    <div class="footer-section">
+      <h3>Categories</h3>
+      <ul>
+        <li><a href="#">Men</a></li>
+        <li><a href="#">Women</a></li>
+        <li><a href="#">Couples</a></li>
+        <li><a href="#">Pets</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Support</h3>
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-section social">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="fb" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="ig" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="tw" /></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 GD Clothing | Made with ❤️ by Godawari Web Technologies
+  </div>
+</footer>
+
+
+<!-- ======= JS: Drawer open / close ======= -->
+<script>
+  const side=document.getElementById('sideMenu');
+  const overlay=document.getElementById('overlay');
+  function openMenu(){side.classList.add('active');overlay.classList.add('active')}
+  function closeMenu(){side.classList.remove('active');overlay.classList.remove('active')}
+</script>
+
+</body>
+</html>
